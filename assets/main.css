@@ -1,0 +1,264 @@
+/* ===========================
+   Stootap Theme — main.css
+   =========================== */
+
+/* Fonts (display=swap to avoid FOIT) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* CSS Variables */
+:root {
+  --brand-50:#f3f8ff;
+  --brand-100:#e6f0ff;
+  --brand-200:#cddfff;
+  --brand-300:#a4c5ff;
+  --brand-400:#6ea2ff;
+  --brand-500:#3a7cff;
+  --brand-600:#1f63f0;
+  --brand-700:#184dc1;
+  --brand-800:#133e9a;
+  --brand-900:#112f74;
+
+  --slate-25:#fcfcfd;
+  --slate-50:#f8fafc;
+  --slate-100:#f1f5f9;
+  --slate-200:#e2e8f0;
+  --slate-300:#cbd5e1;
+  --slate-400:#94a3b8;
+  --slate-500:#64748b;
+  --slate-600:#475569;
+  --slate-700:#334155;
+  --slate-800:#1f2937;
+  --slate-900:#0f172a;
+
+  --radius-lg:16px;
+  --radius-xl:20px;
+  --radius-2xl:24px;
+
+  --shadow-soft:0 10px 30px rgba(0,0,0,.08);
+  --shadow-lift:0 14px 45px rgba(17,47,116,.18);
+  --shadow-focus:0 0 0 3px rgba(58,124,255,.25);
+}
+
+/* Base polish */
+html { scroll-behavior: smooth; }
+body {
+  font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: #fff;
+  color: var(--slate-800);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+::selection { background: var(--brand-200); color: #0b1220; }
+
+/* Subtle page fade-in */
+@keyframes pageFade {
+  from { opacity:.0; transform: translateY(6px); }
+  to { opacity:1; transform: translateY(0); }
+}
+body { animation: pageFade .45s ease-out both; }
+
+/* Buttons & interactive states (enhance Tailwind classes) */
+a, button {
+  transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: none !important;
+  box-shadow: var(--shadow-focus);
+  border-color: var(--brand-300) !important;
+}
+
+/* Lift on hover for primary actions */
+a.bg-brand-500:hover,
+button.bg-brand-500:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Card polish */
+.card {
+  border-radius: var(--radius-2xl) !important;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Overlay modals (progressively enhanced beyond the inline fallback in index.html) */
+.overlay {
+  backdrop-filter: saturate(120%) blur(6px);
+  transition: opacity .25s ease;
+}
+.overlay .card {
+  transform: translateY(8px) scale(.98);
+  transition: transform .25s ease, opacity .25s ease;
+  opacity: .0;
+}
+.overlay:target { opacity: 1; }
+.overlay:target .card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Mobile menu card sizing */
+#mobile-menu .card { max-width: 380px; }
+
+/* Details/summary accordions */
+details {
+  border-radius: var(--radius-2xl);
+  transition: box-shadow .25s ease, border-color .25s ease, background-color .25s ease;
+}
+details[open] { box-shadow: var(--shadow-soft); background: #fff; }
+details summary::-webkit-details-marker { display:none; }
+details summary { outline: none; }
+details summary:focus-visible { box-shadow: var(--shadow-focus); border-radius: 12px; }
+
+/* Fancy divider under section headings */
+section h2, section h3 {
+  position: relative;
+}
+section h2::after, section h3::after {
+  content:"";
+  position:absolute;
+  left:0; bottom:-8px;
+  width:42px; height:3px;
+  border-radius:2px;
+  background: linear-gradient(90deg, var(--brand-500), var(--brand-300));
+  opacity:.85;
+}
+
+/* Hover lift utility for cards/chips */
+.hover-lift {
+  transition: transform .2s ease, box-shadow .25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Gradient chips in hero grid */
+.hero-chip {
+  background: linear-gradient(180deg, #fff, var(--slate-50));
+}
+
+/* Subtle floating animation for emoji/illustrations */
+@keyframes floaty {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+.hero-emoji { animation: floaty 4s ease-in-out infinite; }
+
+/* Smooth expand animation for details content */
+@keyframes expandY {
+  from { opacity:.0; transform: translateY(-4px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+details[open] > *:not(summary) { animation: expandY .22s ease-out; }
+
+/* Footer links */
+footer a { transition: opacity .2s ease, transform .2s ease; }
+footer a:hover { opacity:.95; transform: translateX(2px); }
+
+/* Inputs */
+input, select, textarea {
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+  border-radius: 12px;
+}
+input::placeholder, textarea::placeholder { color: var(--slate-400); }
+
+/* Subtle glass for info badges */
+.badge {
+  background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.55));
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 999px;
+}
+
+/* Scrollbar (Webkit) */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: #f7f8fb; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--brand-400), var(--brand-600));
+  border-radius: 999px;
+  border: 2px solid #f7f8fb;
+}
+
+/* Section reveal utilities (JS will toggle .is-visible in app.js) */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CTA gradient block enhancement */
+.cta-gradient {
+  background: radial-gradient(1200px 400px at 80% 20%, rgba(58,124,255,.10), transparent 60%),
+              linear-gradient(135deg, var(--brand-50), #fff 40%, var(--slate-50));
+}
+
+/* Utility: press effect for buttons */
+.btn-press:active { transform: translateY(1px) scale(.995); }
+
+/* Utility: subtle ring on hover (for light buttons) */
+.ring-hover:hover { box-shadow: 0 0 0 4px rgba(17,47,116,.06); }
+
+/* Reduce animations for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------------------------
+   Optional micro tweaks that match current HTML
+   --------------------------- */
+
+/* Hero emoji in the placeholder visual */
+.aspect-\[4\/3] .text-7xl { line-height: 1; }
+.aspect-\[4\/3] .text-7xl::selection { background: var(--brand-100); }
+
+/* Ensure hero grid chips look tactile */
+section .p-4.rounded-xl.border.bg-white:hover {
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-2px);
+}
+
+/* Make header slightly more glassy on scroll (works instantly) */
+header.sticky {
+  backdrop-filter: saturate(120%) blur(8px);
+}
+
+/* Improve anchor focus outlines in dark footer */
+footer .hover\:text-white:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255,255,255,.25);
+  border-radius: 10px;
+}
+
+/* Details caret icon smoothing */
+details summary span {
+  transition: transform .2s ease, color .2s ease;
+}
+details[open] summary span { color: var(--brand-600); }
+
+/* Login/Signup forms: emphasize primary button */
+#login-modal button,
+#signup-modal button {
+  box-shadow: var(--shadow-soft);
+}
+#login-modal button:hover,
+#signup-modal button:hover { box-shadow: var(--shadow-lift); }
+
+/* Mobile menu links spacing */
+#mobile-menu nav a { font-weight: 500; }
+
+/* Chips in hero section */
+@media (min-width: 640px) {
+  .hero-chip-grid > div { will-change: transform; }
+}
+
+/* Tidy up small devices spacing */
+@media (max-width: 480px) {
+  .h-16 { height: 60px !important; }
+  .rounded-2xl { border-radius: 18px !important; }
+  .rounded-3xl { border-radius: 22px !important; }
+}
