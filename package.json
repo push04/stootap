@@ -1,0 +1,23 @@
+{
+  "name": "stootap-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stootap — service platform",
+  "scripts": {
+    "start": "netlify dev",
+    "build": "echo 'static site – no build step'",
+    "format": "prettier -w ."
+  },
+  "dependencies": {
+    "@netlify/neon": "0.6.0",
+    "bcryptjs": "2.4.3",
+    "jose": "5.9.3",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "prettier": "3.3.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
