@@ -1,0 +1,55 @@
+# ==========================
+# Stootap — Netlify config
+# ==========================
+
+[build]
+  publish = "."
+
+# If you later add a JS router (SPA), uncomment the redirect below.
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
+
+# ---------- Security & performance headers ----------
+[[headers]]
+  for = "/*"
+  [headers.values]
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "SAMEORIGIN"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  X-XSS-Protection = "0"
+  Permissions-Policy = "geolocation=(), camera=(), microphone=(), interest-cohort=()"
+
+  # Content Security Policy:
+  # Note: we allow 'unsafe-inline' for now because index.html includes small inline scripts/styles.
+  # If you later move inline JS/CSS to files, tighten this CSP by removing 'unsafe-inline'.
+  Content-Security-Policy = '''
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    img-src 'self' data:;
+    font-src 'self' https://fonts.gstatic.com;
+    connect-src 'self';
+    frame-ancestors 'self';
+    base-uri 'self';
+    form-action 'self';
+    upgrade-insecure-requests;
+  '''
+
+  # Cache static assets more aggressively if you later add hashed files under /assets/.
+  # For now, keep HTML short-cached so updates are visible immediately.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+  Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+  Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/404.html"
+  [headers.values]
+  Cache-Control = "no-cache, no-store, must-revalidate"
